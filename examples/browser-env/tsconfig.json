@@ -1,0 +1,10 @@
+{
+  "extends": "tsconfig/react-app.json",
+  "include": [
+    "vite.env.d.ts",
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

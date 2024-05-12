@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "include": [
+    "src/*.ts"
+  ],
+  "compilerOptions": {
+    "target": "ES2015",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "module": "ES2020",
+    "composite": false,
+    "resolveJsonModule": true,
+    "strictNullChecks": true,
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": false,
+    "strict": true,
+    "outDir": "lib",
+    "paths": {
+      "@joyid/evm": [
+        "../../packages/evm-sdk/src"
+      ],
+      "@joyid/evm/*": [
+        "../../packages/evm-sdk/src/*"
+      ],
+      "@joyid/ethereum-provider": [
+        "../../packages/ethereum-provider/src"
+      ],
+      "@joyid/ethereum-provider/*": [
+        "../../packages/ethereum-provider/src/*"
+      ],
+      "@joyid/wagmi": [
+        "../../packages/wagmi-sdk/src"
+      ],
+      "@joyid/wagmi/*": [
+        "../../packages/wagmi-sdk/src/*"
+      ]
+    }
+  }
+}
