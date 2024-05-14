@@ -1,5 +1,11 @@
 import satori from 'satori'
 import { renderParamsParser } from './render-params-parser'
+import { base64ToArrayBuffer } from "./utils/string";
+import TurretRoadBoldBase64 from './fonts/TurretRoad-Bold.base64'
+import TurretRoadMediumBase64 from './fonts/TurretRoad-Medium.base64'
+
+const TurretRoadMediumFont = base64ToArrayBuffer(TurretRoadMediumBase64)
+const TurretRoadBoldFont = base64ToArrayBuffer(TurretRoadBoldBase64)
 
 interface RenderElement<P = any, S = object, T = string> {
   type: T
@@ -11,7 +17,7 @@ interface RenderElement<P = any, S = object, T = string> {
 }
 
 export interface RenderProps extends ReturnType<typeof renderParamsParser> {
-  font: {
+  font?: {
     regular: ArrayBuffer
     italic: ArrayBuffer
     bold: ArrayBuffer
@@ -34,7 +40,12 @@ export const fetchFont = async (url: string) => {
 }
 
 export async function renderSVG(props: RenderProps) {
-  const { regular, italic, bold, boldItalic } = props.font
+  const { regular, italic, bold, boldItalic } = props.font ?? {
+    regular: TurretRoadMediumFont,
+    italic: TurretRoadMediumFont,
+    bold: TurretRoadBoldFont,
+    boldItalic: TurretRoadBoldFont,
+  }
   const children = props.items.reduce((acc, item) => {
     const justifyContent = {
       left: 'flex-start',

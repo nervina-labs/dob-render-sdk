@@ -6,7 +6,7 @@ export interface DobDecodeResponse {
 
 export interface DobDecodeResult {
   dobContent: { dna: string; block_number: number; cell_id: number; id: string }
-  renderOutput: RenderOutput[]
+  renderOutput: RenderOutput[] | string
 }
 
 export interface RenderOutput {

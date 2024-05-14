@@ -26,15 +26,7 @@ function App() {
       const { traits, indexVarRegister } = traitsParser(items)
       const renderOptions = renderParamsParser(traits, indexVarRegister)
 
-      const svgCode = await renderSVG({
-        ...renderOptions,
-        font: {
-          regular: await fetchFont('/fonts/TurretRoad-Medium.ttf'),
-          italic: await fetchFont('/fonts/TurretRoad-Medium.ttf'),
-          bold: await fetchFont('/fonts/TurretRoad-Bold.ttf'),
-          boldItalic: await fetchFont('/fonts/TurretRoad-Bold.ttf'),
-        }
-      })
+      const svgCode = await renderSVG(renderOptions)
       setImgSrc(await svgToBase64(svgCode))
     } catch (error) {
       alert(error instanceof Error ? error.message : error)

@@ -1,5 +1,5 @@
 {
-  "name": "dob-render-sdk",
+  "name": "dob-render-sdk-repo",
   "private": true,
   "scripts": {
     "build": "turbo build",

@@ -13,4 +13,5 @@ export default defineConfig({
   entry: ['src/index.ts'],
   external: [...Object.keys(dependencies)],
   platform: 'neutral',
+  minify: true,
 })

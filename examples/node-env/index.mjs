@@ -1,7 +1,6 @@
 import { renderParamsParser, renderSVG, traitsParser } from "dob-render-sdk";
-import * as fs from 'fs'
 
-import { dirname, join } from 'path';
+import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -11,16 +10,7 @@ const items = JSON.parse('[{"name":"wuxing_yinyang","traits":[{"String":"3<_>"}]
 const { traits, indexVarRegister } = traitsParser(items)
 const renderOptions = renderParamsParser(traits, indexVarRegister)
 
-const readFile = (p) => fs.readFileSync(join(__dirname, p))
 
-const svgCode = await renderSVG({
-  ...renderOptions,
-  font: {
-    regular: readFile('./fonts/TurretRoad-Medium.ttf'),
-    italic: readFile('./fonts/TurretRoad-Medium.ttf'),
-    bold: readFile('./fonts/TurretRoad-Bold.ttf'),
-    boldItalic: readFile('./fonts/TurretRoad-Bold.ttf'),
-  }
-})
+const svgCode = await renderSVG(renderOptions)
 
 console.log(svgCode)
