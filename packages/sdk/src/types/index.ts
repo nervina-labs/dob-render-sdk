@@ -1,15 +1,20 @@
 export interface DobDecodeResponse {
-  jsonrpc: string
-  result: string
-  id: number
+  jsonrpc: string;
+  result: string;
+  id: number;
 }
 
 export interface DobDecodeResult {
-  dobContent: { dna: string; block_number: number; cell_id: number; id: string }
-  renderOutput: RenderOutput[] | string
+  dob_content: {
+    dna: string;
+    block_number: number;
+    cell_id: number;
+    id: string;
+  };
+  render_output: RenderOutput[] | string;
 }
 
 export interface RenderOutput {
-  name: string
-  traits: { String?: string; Number?: number }[]
+  name: string;
+  traits: { String?: string; Number?: number }[];
 }

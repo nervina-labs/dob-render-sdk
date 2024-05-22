@@ -26,9 +26,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.11",
-    "eslint": "8.25.0",
     "eslint-config-custom": "workspace:*",
-    "eslint-plugin-turbo": "^1.10.16",
     "tsconfig": "workspace:*",
     "tsup": "^8.0.2",
     "vitest": "^1.6.0"

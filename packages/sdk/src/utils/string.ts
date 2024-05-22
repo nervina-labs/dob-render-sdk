@@ -1,6 +1,8 @@
+import type { BtcFsURI } from "../config";
+
 export function parseStringToArray(str: string): string[] {
-  const regex = /'([^']*)'/g
-  return [...str.matchAll(regex)].map((match) => match[1])
+  const regex = /'([^']*)'/g;
+  return [...str.matchAll(regex)].map((match) => match[1]);
 }
 
 export function base64ToArrayBuffer(base64: string) {
@@ -12,4 +14,16 @@ export function base64ToArrayBuffer(base64: string) {
   }
 
   return uint8Array.buffer;
+}
+
+export function isBtcFs(uri: string): uri is BtcFsURI {
+  return uri.startsWith("btcfs://");
+}
+
+export function hexToBase64(hexstring: string) {
+  const str = hexstring
+    .match(/\w{2}/g)
+    ?.map((a) => String.fromCharCode(parseInt(a, 16)))
+    .join("");
+  return str ? btoa(str) : "";
 }

@@ -10,9 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "dob-render-sdk": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "dob-render-sdk": "workspace:*"
+    "react-query": "^3.39.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
@@ -23,8 +24,8 @@
     "eslint": "8.25.0",
     "eslint-config-custom": "workspace:*",
     "eslint-plugin-turbo": "^1.10.16",
+    "tsconfig": "workspace:*",
     "typescript": "^5.2.2",
-    "vite": "^5.2.0",
-    "tsconfig": "workspace:*"
+    "vite": "^5.2.0"
   }
 }
