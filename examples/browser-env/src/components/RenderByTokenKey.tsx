@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useMutation } from 'react-query'
-import { renderByTokenKey, svgToBase64 } from 'dob-render-sdk'
+import { renderByTokenKey, svgToBase64 } from '@nervina-labs/dob-render'
 
 export const RenderByTokenKey = () => {
   const [tokenKey, setTokenKey] = useState(

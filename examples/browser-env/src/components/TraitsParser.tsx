@@ -5,7 +5,7 @@ import {
   renderTextSvg,
   svgToBase64,
   traitsParser,
-} from 'dob-render-sdk'
+} from '@nervina-labs/dob-render'
 
 export const TraitsParser: FC = () => {
   const [traitsText, setTraitsText] = useState<string>(
