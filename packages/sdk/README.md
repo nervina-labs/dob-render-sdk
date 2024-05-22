@@ -1,11 +1,24 @@
 # Spore DOB render SDK
 
+## Installation
+```bash
+npm i @nervina-labs/dob-render
+```
+
 ## Usage
+
+### Examples
+[SDK Docs](./packages/sdk/README.md)
+
+[Browser Example](../../examples/browser-env)
+
+[NodeJs Example](../../examples/node-env)
+
 
 ### Render by token key
 [Preview](https://app.joy.id/nft/dc19e68af1793924845e2a4dbc23598ed919dcfe44d3f9cd90964fe590efb0e4)
 ```ts
-import { renderByTokenKey } from 'dob-render-sdk'
+import { renderByTokenKey } from '@nervina-labs/dob-render'
 
 const tokenKey = 'dc19e68af1793924845e2a4dbc23598ed919dcfe44d3f9cd90964fe590efb0e4'
 await renderByTokenKey(tokenKey) // <svg .../>
@@ -13,6 +26,8 @@ await renderByTokenKey(tokenKey) // <svg .../>
 
 ### Render by dob decode server
 ```ts
+import { renderByDobDecodeResponse } from '@nervina-labs/dob-render'
+
 const tokenKey = 'dc19e68af1793924845e2a4dbc23598ed919dcfe44d3f9cd90964fe590efb0e4'
 const response = await fetch('https://dob-decoder.rgbpp.io', {
   method: "POST",
@@ -32,7 +47,7 @@ await renderByDobDecodeResponse(dobDecodeResult.result) // <svg ... />
 
 ### Custom font
 ```ts
-import { renderByTokenKey } from 'dob-render-sdk'
+import { renderByTokenKey } from '@nervina-labs/dob-render'
 
 const fetchFont = async (url: string) => fetch(url).then((res) => res.arrayBuffer())
 const [regular, italic, bold, boldItalic] = await Promise.all([
@@ -51,4 +66,50 @@ await renderByTokenKey(tokenKey, {
     boldItalic,
   }
 }) // <svg .../>
+```
+
+### Config
+#### Config DOB Decode server
+
+[DOB Decode server source code](https://github.com/sporeprotocol/dob-decoder-standalone-server)
+```ts
+import { 
+  config, // step1: import
+  renderByTokenKey,
+} from '@nervina-labs/dob-render'
+
+// step2: set
+config.setDobDecodeServerURL('https://dob-decoder.rgbpp.io')
+
+const tokenKey = 'dc19e68af1793924845e2a4dbc23598ed919dcfe44d3f9cd90964fe590efb0e4'
+await renderByTokenKey(tokenKey) // this function will query the configured decode service to read the data required for rendering
+```
+
+#### Config `btcfs` query function
+```ts
+import { 
+  config, // step1: import
+  renderByTokenKey,
+} from '@nervina-labs/dob-render'
+
+// step2: set
+config.setQueryBtcFsFn(async (uri) => {
+  const response = await fetch(`https://api.joy.id/api/v1/wallet/dob_imgs?uri=${uri}`)
+  return response.json()
+})
+
+const tokenKey = 'dc19e68af1793924845e2a4dbc23598ed919dcfe44d3f9cd90964fe590efb0e4'
+await renderByTokenKey(tokenKey) // this function will use the configured btcfs function
+```
+
+##### API
+```ts
+export interface BtcFsResult {
+  content: string
+  content_type: string
+}
+
+export type BtcFsURI = `btcfs://${string}`
+
+export type QueryBtcFsFn = (uri: BtcFsURI) => Promise<BtcFsResult>
 ```
