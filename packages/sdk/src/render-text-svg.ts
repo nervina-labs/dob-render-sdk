@@ -1,22 +1,14 @@
 import satori from 'satori'
-import { renderParamsParser } from './render-params-parser'
-import { base64ToArrayBuffer } from "./utils/string";
+import type { renderTextParamsParser } from './render-text-params-parser'
+import { base64ToArrayBuffer } from './utils/string'
 import TurretRoadBoldBase64 from './fonts/TurretRoad-Bold.base64'
 import TurretRoadMediumBase64 from './fonts/TurretRoad-Medium.base64'
+import type { RenderElement } from './types/internal'
 
 const TurretRoadMediumFont = base64ToArrayBuffer(TurretRoadMediumBase64)
 const TurretRoadBoldFont = base64ToArrayBuffer(TurretRoadBoldBase64)
 
-interface RenderElement<P = any, S = object, T = string> {
-  type: T
-  props: P & {
-    children: RenderElement | RenderElement[]
-    style: S
-  }
-  key: string | null
-}
-
-export interface RenderProps extends ReturnType<typeof renderParamsParser> {
+export interface RenderProps extends ReturnType<typeof renderTextParamsParser> {
   font?: {
     regular: ArrayBuffer
     italic: ArrayBuffer
@@ -25,28 +17,14 @@ export interface RenderProps extends ReturnType<typeof renderParamsParser> {
   }
 }
 
-const fontCache: Record<string, ArrayBuffer> = {}
-
-export const fetchFont = async (url: string) => {
-  const cache = fontCache[url]
-  if (cache) return cache
-  // eslint-disable-next-line compat/compat
-  return fetch(url)
-    .then((res) => res.arrayBuffer())
-    .then((arrayBuffer) => {
-      fontCache[url] = arrayBuffer
-      return arrayBuffer
-    })
-}
-
-export async function renderSVG(props: RenderProps) {
+export async function renderTextSvg(props: RenderProps) {
   const { regular, italic, bold, boldItalic } = props.font ?? {
     regular: TurretRoadMediumFont,
     italic: TurretRoadMediumFont,
     bold: TurretRoadBoldFont,
     boldItalic: TurretRoadBoldFont,
   }
-  const children = props.items.reduce((acc, item) => {
+  const children = props.items.reduce<RenderElement[]>((acc, item) => {
     const justifyContent = {
       left: 'flex-start',
       center: 'center',
@@ -90,7 +68,7 @@ export async function renderSVG(props: RenderProps) {
       })
     }
     return acc
-  }, [] as RenderElement[])
+  }, [])
 
   return satori(
     {
@@ -140,6 +118,6 @@ export async function renderSVG(props: RenderProps) {
           style: 'italic',
         },
       ],
-    }
+    },
   )
 }

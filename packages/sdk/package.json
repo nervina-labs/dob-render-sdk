@@ -1,5 +1,5 @@
 {
-  "name": "dob-render-sdk",
+  "name": "@nervina-labs/dob-render",
   "version": "0.0.0",
   "description": "RGB++ DOB render SDK",
   "main": "./dist/index.js",
@@ -25,10 +25,9 @@
     "lint:fix": "tsc && eslint --fix '{src,tests}/**/*.{js,ts}' && prettier --write '{src,tests}/**/*.{js,ts}'"
   },
   "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
     "@types/node": "^20.12.11",
-    "eslint": "8.25.0",
-    "eslint-config-custom": "workspace:*",
-    "eslint-plugin-turbo": "^1.10.16",
+    "prettier": "^3.2.5",
     "tsconfig": "workspace:*",
     "tsup": "^8.0.2",
     "vitest": "^1.6.0"

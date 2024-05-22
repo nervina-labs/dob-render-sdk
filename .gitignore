@@ -42,3 +42,4 @@ packages/sdk/tsconfig.build.tsbuildinfo
 packages/sdk/tsconfig.tsbuildinfo
 
 .idea
+tsconfig.tsbuildinfo

@@ -8,7 +8,7 @@
     "start": "node index.mjs"
   },
   "dependencies": {
-    "dob-render-sdk": "workspace:*"
+    "@nervina-labs/dob-render": "workspace:*"
   },
   "private": true
 }

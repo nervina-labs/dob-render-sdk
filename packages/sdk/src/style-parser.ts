@@ -29,7 +29,7 @@ export function styleParser(
   str: string,
   options?: {
     baseStyle: ParsedStyle
-  }
+  },
 ) {
   let text = str
   const jsonResult = options?.baseStyle || { ...DEFAULT_STYLE }
@@ -38,19 +38,19 @@ export function styleParser(
     text = text.substring(1, str.length - 1)
   }
 
-  const colorMatch6 = text.match(/#([0-9a-fA-F]{6})/)
+  const colorMatch6 = /#([0-9a-fA-F]{6})/.exec(text)
   if (colorMatch6) {
     jsonResult.color = `#${colorMatch6[1]}`
     text = text.replace(/#([0-9a-fA-F]{6})/, '')
   }
 
-  const colorMatch3 = text.match(/#([0-9a-fA-F]{3})/)
+  const colorMatch3 = /#([0-9a-fA-F]{3})/.exec(text)
   if (colorMatch3) {
     jsonResult.color = `#${colorMatch3[1]}`
     text = text.replace(/#([0-9a-fA-F]{3})/, '')
   }
 
-  const formatMatch = text.match(/\*([bisu]+)/)
+  const formatMatch = /\*([bisu]+)/.exec(text)
   if (formatMatch) {
     jsonResult.format = formatMatch[1]
       .split('')
@@ -73,9 +73,8 @@ export function styleParser(
     text = text.replace(/\*([bisu]+)/, '')
   }
 
-  const alignmentMatch = text.match(/@(l|c|r)/)
+  const alignmentMatch = /@(l|c|r)/.exec(text)
   if (alignmentMatch) {
-    // eslint-disable-next-line default-case
     switch (alignmentMatch[1]) {
       case 'l':
         jsonResult.alignment = ParsedStyleAlignment.Left
@@ -90,7 +89,7 @@ export function styleParser(
     text = text.replace(/@(l|c|r)/, '')
   }
 
-  const traitsMatch = text.match(/&/)
+  const traitsMatch = /&/.exec(text)
   if (traitsMatch) {
     text = text.replace(/&/, '')
     jsonResult.breakLine = 0

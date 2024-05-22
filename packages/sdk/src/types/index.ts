@@ -5,8 +5,13 @@ export interface DobDecodeResponse {
 }
 
 export interface DobDecodeResult {
-  dobContent: { dna: string; block_number: number; cell_id: number; id: string }
-  renderOutput: RenderOutput[] | string
+  dob_content: {
+    dna: string
+    block_number: number
+    cell_id: number
+    id: string
+  }
+  render_output: RenderOutput[] | string
 }
 
 export interface RenderOutput {

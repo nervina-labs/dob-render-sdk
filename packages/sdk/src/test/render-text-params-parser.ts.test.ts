@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { DEFAULT_TEMPLATE, renderParamsParser } from '../render-params-parser'
+import {
+  DEFAULT_TEMPLATE,
+  renderTextParamsParser,
+} from '../render-text-params-parser'
 import { traitsParser } from '../traits-parser'
 import { Key } from '../constants/key'
 import { DEFAULT_STYLE } from '../style-parser'
 
-describe('function renderParamsParser', () => {
+describe('function renderTextParamsParser', () => {
   it('case: default template', () => {
     const { traits, indexVarRegister } = traitsParser([
       {
@@ -16,7 +19,7 @@ describe('function renderParamsParser', () => {
         ],
       },
     ])
-    const params = renderParamsParser(traits, indexVarRegister, {
+    const params = renderTextParamsParser(traits, indexVarRegister, {
       defaultTemplate: DEFAULT_TEMPLATE,
     })
     expect(params.items[0].text).toEqual('Key: Value')
@@ -33,7 +36,7 @@ describe('function renderParamsParser', () => {
         ],
       },
     ])
-    const params = renderParamsParser(traits, indexVarRegister, {
+    const params = renderTextParamsParser(traits, indexVarRegister, {
       defaultTemplate: '%v',
     })
     expect(params.items[0].text).toEqual('Value')
@@ -58,7 +61,7 @@ describe('function renderParamsParser', () => {
         ],
       },
     ])
-    const params = renderParamsParser(traits, indexVarRegister)
+    const params = renderTextParamsParser(traits, indexVarRegister)
     expect(params.items[0].text).toEqual('ddd Value')
   })
 
@@ -73,7 +76,7 @@ describe('function renderParamsParser', () => {
         ],
       },
     ])
-    const params = renderParamsParser(traits, indexVarRegister)
+    const params = renderTextParamsParser(traits, indexVarRegister)
     expect(params.items[0].text).toEqual('Key Key Value')
   })
 
@@ -104,7 +107,7 @@ describe('function renderParamsParser', () => {
         ],
       },
     ])
-    const params = renderParamsParser(traits, indexVarRegister)
+    const params = renderTextParamsParser(traits, indexVarRegister)
     expect(params.items[0].text).toEqual('ddd Value')
     const expectStyle = {
       ...DEFAULT_STYLE,
@@ -130,7 +133,7 @@ describe('function renderParamsParser', () => {
         ],
       },
     ])
-    const params = renderParamsParser(traits, indexVarRegister)
+    const params = renderTextParamsParser(traits, indexVarRegister)
     expect(params.items[0].text).toEqual('Key Key Value')
     const expectStyle = {
       ...DEFAULT_STYLE,
