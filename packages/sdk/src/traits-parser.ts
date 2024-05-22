@@ -1,5 +1,5 @@
 import { ARRAY_INDEX_REG, ARRAY_REG } from './constants/regex'
-import { RenderOutput } from './types'
+import type { RenderOutput } from './types'
 import { parseStringToArray } from './utils/string'
 
 export interface ParsedTrait {
@@ -12,7 +12,7 @@ export function traitsParser(items: RenderOutput[]): {
   indexVarRegister: Record<string, number>
 } {
   const indexVarRegister = items.reduce<Record<string, number>>((acc, item) => {
-    if (!item.traits?.[0]?.String) return acc
+    if (!item.traits[0]?.String) return acc
     const match = item.traits[0].String.match(ARRAY_INDEX_REG)
     if (!match) return acc
     const intIndex = parseInt(match[1], 10)
@@ -24,7 +24,7 @@ export function traitsParser(items: RenderOutput[]): {
     .map<ParsedTrait | null>((item) => {
       const { traits: trait } = item
       if (
-        trait?.[0] &&
+        trait[0] &&
         'String' in trait[0] &&
         typeof trait[0].String === 'string'
       ) {
@@ -42,7 +42,7 @@ export function traitsParser(items: RenderOutput[]): {
         } as ParsedTrait
       }
       if (
-        trait?.[0] &&
+        trait[0] &&
         'Number' in trait[0] &&
         typeof trait[0].Number === 'number'
       ) {

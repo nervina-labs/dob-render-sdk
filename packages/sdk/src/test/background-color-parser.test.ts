@@ -19,7 +19,7 @@ describe('function backgroundColorParser', async () => {
       },
     ])
     expect(backgroundColorParser(traits)).toEqual(
-      getBackgroundColorByTraits(traits)
+      getBackgroundColorByTraits(traits),
     )
   })
 
@@ -27,7 +27,7 @@ describe('function backgroundColorParser', async () => {
     const { traits } = traitsParser([])
     const defaultColor = '#fff'
     expect(backgroundColorParser(traits, { defaultColor })).toEqual(
-      defaultColor
+      defaultColor,
     )
   })
 
@@ -43,7 +43,7 @@ describe('function backgroundColorParser', async () => {
       },
     ])
     expect(backgroundColorParser(traits)).toEqual(
-      'linear-gradient(45deg, blue, pink)'
+      'linear-gradient(45deg, blue, pink)',
     )
   })
 })
