@@ -113,3 +113,53 @@ export type BtcFsURI = `btcfs://${string}`
 
 export type QueryBtcFsFn = (uri: BtcFsURI) => Promise<BtcFsResult>
 ```
+
+### TraitsParser
+```ts
+import { traitsParser } from '@nervina-labs/dob-render' 
+
+const { traits, indexVarRegister } = traitsParser([
+  {
+    name: 'var',
+    traits: [
+      {
+        String: `4<_>`,
+      },
+    ],
+  },
+  {
+    name: 'prev.bgcolor',
+    traits: [
+      {
+        String: `(%var):['#FFFF00', '#0000FF', '#FF00FF', '#FF0000', '#000000']`,
+      },
+    ],
+  },
+])
+
+const trait = traits.find(({ name }) => name === 'prev.bgcolor').value // is '#000000'
+indexVarRegister['var'] // is 4
+```
+
+[More example](./src/test/traits-parser.test.ts)
+
+#### API
+```ts
+interface RenderOutput {
+  name: string;
+  traits: {
+    String?: string;
+    Number?: number;
+  }[];
+}
+
+interface ParsedTrait {
+  name: string;
+  value: number | string;
+}
+
+function traitsParser(items: RenderOutput[]): {
+  traits: ParsedTrait[];
+  indexVarRegister: Record<string, number>;
+};
+```
