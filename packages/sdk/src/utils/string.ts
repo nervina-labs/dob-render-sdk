@@ -1,4 +1,4 @@
-import type { BtcFsURI } from '../config'
+import type {BtcFsURI, IpfsURI} from '../config'
 
 export function parseStringToArray(str: string): string[] {
   const regex = /'([^']*)'/g
@@ -18,6 +18,10 @@ export function base64ToArrayBuffer(base64: string): ArrayBuffer {
 
 export function isBtcFs(uri: string): uri is BtcFsURI {
   return uri.startsWith('btcfs://')
+}
+
+export function isIpfs(uri: string): uri is IpfsURI {
+  return uri.startsWith('ipfs://')
 }
 
 export function hexToBase64(hexstring: string): string {

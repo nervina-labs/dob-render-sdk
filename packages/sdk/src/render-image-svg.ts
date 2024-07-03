@@ -1,7 +1,7 @@
 import satori from 'satori'
 import type { ParsedTrait } from './traits-parser'
 import { config } from './config'
-import { hexToBase64, isBtcFs } from './utils/string'
+import {hexToBase64, isBtcFs, isIpfs} from './utils/string'
 import { backgroundColorParser } from './background-color-parser'
 
 export async function renderImageSvg(traits: ParsedTrait[]): Promise<string> {
@@ -12,7 +12,10 @@ export async function renderImageSvg(traits: ParsedTrait[]): Promise<string> {
   if (prevBg?.value && typeof prevBg.value === 'string') {
     if (isBtcFs(prevBg.value)) {
       const btcFsResult = await config.queryBtcFsFn(prevBg.value)
-      bgImage = `data:${btcFsResult.content_type};base64,${hexToBase64(btcFsResult.content)}`
+      bgImage = typeof btcFsResult === 'string' ? btcFsResult : `data:${btcFsResult.content_type};base64,${hexToBase64(btcFsResult.content)}`
+    } else if (isIpfs(prevBg.value)) {
+      const ipfsFsResult = await config.queryIpfsFn(prevBg.value)
+      bgImage = typeof ipfsFsResult === 'string' ? ipfsFsResult : `data:${ipfsFsResult.content_type};base64,${hexToBase64(ipfsFsResult.content)}`
     } else if (prevBg.value.startsWith('https://')) {
       bgImage = prevBg.value
     }
@@ -37,6 +40,8 @@ export async function renderImageSvg(traits: ParsedTrait[]): Promise<string> {
                 type: 'img',
                 props: {
                   src: bgImage,
+                  width: 500,
+                  height: 500,
                   style: {
                     width: '100%',
                     height: '100%',
