@@ -6,7 +6,7 @@ import { backgroundColorParser } from './background-color-parser'
 
 export async function renderImageSvg(traits: ParsedTrait[]): Promise<string> {
   const prevBg = traits.find((trait) => trait.name === 'prev.bg')
-  const bgColor = backgroundColorParser(traits, { defaultColor: '#000' })
+  const bgColor = backgroundColorParser(traits, { defaultColor: '#fff' })
 
   let bgImage = ''
   if (prevBg?.value && typeof prevBg.value === 'string') {
