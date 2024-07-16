@@ -45,9 +45,13 @@ export function traitsParser(items: RenderOutput[]): {
         } as ParsedTrait
       }
       if ('Timestamp' in trait[0] && typeof trait[0].Timestamp === 'number') {
+        let timestamp = trait[0].Timestamp as number
+        if (`${timestamp}`.length === 10) {
+          timestamp = timestamp * 1000
+        }
         return {
           name: item.name,
-          value: new Date(trait[0].Timestamp),
+          value: new Date(timestamp),
         } as ParsedTrait
       }
       return null
