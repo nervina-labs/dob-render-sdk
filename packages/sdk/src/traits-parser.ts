@@ -4,7 +4,7 @@ import { parseStringToArray } from './utils/string'
 
 export interface ParsedTrait {
   name: string
-  value: number | string
+  value: number | string | Date
 }
 
 export function traitsParser(items: RenderOutput[]): {
@@ -23,11 +23,8 @@ export function traitsParser(items: RenderOutput[]): {
   const traits = items
     .map<ParsedTrait | null>((item) => {
       const { traits: trait } = item
-      if (
-        trait[0] &&
-        'String' in trait[0] &&
-        typeof trait[0].String === 'string'
-      ) {
+      if (!trait[0]) return null
+      if ('String' in trait[0] && typeof trait[0].String === 'string') {
         let value = item.traits[0].String
         const matchArray = value!.match(ARRAY_REG)
         if (matchArray) {
@@ -41,14 +38,16 @@ export function traitsParser(items: RenderOutput[]): {
           name: item.name,
         } as ParsedTrait
       }
-      if (
-        trait[0] &&
-        'Number' in trait[0] &&
-        typeof trait[0].Number === 'number'
-      ) {
+      if ('Number' in trait[0] && typeof trait[0].Number === 'number') {
         return {
           name: item.name,
           value: trait[0].Number,
+        } as ParsedTrait
+      }
+      if ('Timestamp' in trait[0] && typeof trait[0].Timestamp === 'number') {
+        return {
+          name: item.name,
+          value: new Date(trait[0].Timestamp),
         } as ParsedTrait
       }
       return null

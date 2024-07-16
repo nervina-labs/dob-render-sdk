@@ -75,10 +75,6 @@ export function renderDobBit(
               style: {
                 marginBottom: '20px',
                 fontSize: `${fontSize}px`,
-                // textOverflow: 'ellipsis',
-                // whiteSpace: 'nowrap',
-                // overflow: 'hidden',
-                // width: '500px',
                 textAlign: 'center',
               },
             },

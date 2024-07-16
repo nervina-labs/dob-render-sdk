@@ -16,5 +16,5 @@ export interface DobDecodeResult {
 
 export interface RenderOutput {
   name: string
-  traits: { String?: string; Number?: number }[]
+  traits: { String?: string; Number?: number; Timestamp?: Date }[]
 }
