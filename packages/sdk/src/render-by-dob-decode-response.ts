@@ -5,6 +5,7 @@ import type { RenderProps } from './render-text-svg'
 import { renderTextSvg } from './render-text-svg'
 import { renderImageSvg } from './render-image-svg'
 import { renderDob1Svg } from './render-dob1-svg'
+import { Key } from './constants/key'
 
 export function renderByDobDecodeResponse(
   dob0Data: DobDecodeResult | string,
@@ -26,7 +27,7 @@ export function renderByDobDecodeResponse(
       return renderImageSvg(traits)
     }
     // TODO: multiple images
-    if (trait.name === 'IMAGE' && trait.value instanceof Promise) {
+    if (trait.name === Key.Image && trait.value instanceof Promise) {
       return renderDob1Svg(trait.value)
     }
   }
