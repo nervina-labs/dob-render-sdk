@@ -1,15 +1,10 @@
 import type { DobDecodeResult, RenderOutput } from './types'
-import type { ParsedTrait } from './traits-parser'
 import { traitsParser } from './traits-parser'
 import { renderTextParamsParser } from './render-text-params-parser'
 import type { RenderProps } from './render-text-svg'
 import { renderTextSvg } from './render-text-svg'
 import { renderImageSvg } from './render-image-svg'
-
-function getPrevType(traits: ParsedTrait[]): 'image' | 'text' {
-  const prevTypeOutput = traits.find((trait) => trait.name === 'prev.type')
-  return (prevTypeOutput?.value as 'image' | 'text') || 'text'
-}
+import { renderDob1Svg } from './render-dob1-svg'
 
 export function renderByDobDecodeResponse(
   dob0Data: DobDecodeResult | string,
@@ -26,8 +21,14 @@ export function renderByDobDecodeResponse(
     ) as RenderOutput[]
   }
   const { traits, indexVarRegister } = traitsParser(dob0Data.render_output)
-  if (getPrevType(traits) === 'image') {
-    return renderImageSvg(traits)
+  for (const trait of traits) {
+    if (trait.name === 'prev.type' && trait.value === 'image') {
+      return renderImageSvg(traits)
+    }
+    // TODO: multiple images
+    if (trait.name === 'IMAGE' && trait.value instanceof Promise) {
+      return renderDob1Svg(trait.value)
+    }
   }
   const renderOptions = renderTextParamsParser(traits, indexVarRegister)
   return renderTextSvg({ ...renderOptions, font: props?.font })

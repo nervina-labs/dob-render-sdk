@@ -1,10 +1,12 @@
+import type { INode } from 'svgson'
 import { ARRAY_INDEX_REG, ARRAY_REG } from './constants/regex'
 import type { RenderOutput } from './types'
 import { parseStringToArray } from './utils/string'
+import { resolveSvgTraits } from './resolve-svg-traits'
 
 export interface ParsedTrait {
   name: string
-  value: number | string | Date
+  value: number | string | Date | Promise<INode>
 }
 
 export function traitsParser(items: RenderOutput[]): {
@@ -53,6 +55,12 @@ export function traitsParser(items: RenderOutput[]): {
           name: item.name,
           value: new Date(timestamp),
         } as ParsedTrait
+      }
+      if ('SVG' in trait[0] && typeof trait[0].SVG === 'string') {
+        return {
+          name: item.name,
+          value: resolveSvgTraits(trait[0].SVG),
+        }
       }
       return null
     })

@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { useMutation } from 'react-query'
 import { renderByTokenKey, svgToBase64 } from '@nervina-labs/dob-render'
 
-
 export const RenderByTokenKey = () => {
   const searchParams = new URLSearchParams(location.search)
   const [tokenKey, setTokenKey] = useState(
-    searchParams.get('token') ?? 'dc19e68af1793924845e2a4dbc23598ed919dcfe44d3f9cd90964fe590efb0e4',
+    searchParams.get('token') ??
+      'dc19e68af1793924845e2a4dbc23598ed919dcfe44d3f9cd90964fe590efb0e4',
   )
   const { mutateAsync, isLoading, data } = useMutation(async () => {
     try {

@@ -1,7 +1,9 @@
-export type FileServerResult = string | {
-  content: string
-  content_type: string
-}
+export type FileServerResult =
+  | string
+  | {
+      content: string
+      content_type: string
+    }
 
 export type BtcFsResult = FileServerResult
 
@@ -11,7 +13,7 @@ export type BtcFsURI = `btcfs://${string}`
 export type IpfsURI = `ipfs://${string}`
 
 export type QueryBtcFsFn = (uri: BtcFsURI) => Promise<BtcFsResult>
-export type QueryIpfsFn = (uri: IpfsURI) => Promise<IpfsResult>;
+export type QueryIpfsFn = (uri: IpfsURI) => Promise<IpfsResult>
 
 export class Config {
   private _dobDecodeServerURL = 'https://dob-decoder.rgbpp.io'
@@ -25,25 +27,16 @@ export class Config {
     const response = await fetch(`https://ipfs.io/ipfs/${key}`)
     const blob = await response.blob()
     return new Promise<IpfsResult>((resolve, reject) => {
-      const reader = new FileReader() ;
+      const reader = new FileReader()
       // eslint-disable-next-line func-names
-      reader.onload = function(){
+      reader.onload = function () {
         const base64 = this.result as string
         resolve(base64)
-        // if (typeof base64 !== 'string') {
-        //   reject(new Error('Invalid base64 format'))
-        // }
-        // const matches = /^data:(.+);base64,(.*)$/.exec(base64);
-        // if (!matches || matches.length !== 3) {
-        //   reject(new Error('Invalid base64 format'))
-        // }
-        // resolve({
-        //   content: matches?.[2] ?? '',
-        //   content_type: matches?.[1] ?? ''
-        // })
       }
-      reader.onerror = (error) => { reject(error); }
-      reader.readAsDataURL(blob) ;
+      reader.onerror = (error) => {
+        reject(error)
+      }
+      reader.readAsDataURL(blob)
     })
   }
 

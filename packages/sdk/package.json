@@ -1,6 +1,6 @@
 {
   "name": "@nervina-labs/dob-render",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "RGB++ DOB render SDK",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "satori": "^0.10.13",
+    "svgson": "^5.3.1",
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
