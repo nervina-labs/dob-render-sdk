@@ -40,7 +40,7 @@ export function renderTextParamsParser(
         !trait.name.startsWith(Key.Prev) &&
         typeof trait.value !== 'undefined' &&
         !(trait.name in indexVarRegister) &&
-        trait.name === Key.Image,
+        trait.name !== Key.Image,
     )
     .map((trait) => {
       let currentTemplate = template
