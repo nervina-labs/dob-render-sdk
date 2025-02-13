@@ -6,7 +6,6 @@ export type FileServerResult =
     }
 
 export type BtcFsResult = FileServerResult
-
 export type IpfsResult = FileServerResult
 
 export type BtcFsURI = `btcfs://${string}`
@@ -14,30 +13,41 @@ export type IpfsURI = `ipfs://${string}`
 
 export type QueryBtcFsFn = (uri: BtcFsURI) => Promise<BtcFsResult>
 export type QueryIpfsFn = (uri: IpfsURI) => Promise<IpfsResult>
+export type QueryUrlFn = (uri: string) => Promise<FileServerResult>
 
 export class Config {
   private _dobDecodeServerURL = 'https://dob-decoder.rgbpp.io'
   private _queryBtcFsFn: QueryBtcFsFn = async (uri) => {
-    return fetch(`https://api.joy.id/api/v1/wallet/dob_imgs?uri=${uri}`).then(
+    return fetch(`https://api.omiga.io/api/v1/nfts/dob_imgs?uri=${uri}`).then(
       (res) => res.json(),
     )
   }
+
+  private _queryUrlFn = async (url: string) => {   
+    try {
+      const response = await fetch(url)
+      const blob = await response.blob()
+      return new Promise<IpfsResult>((resolve, reject) => {
+        const reader = new FileReader()
+        // eslint-disable-next-line func-names
+        reader.onload = function () {
+          const base64 = this.result as string
+          resolve(base64)
+        }
+        reader.onerror = (error) => {
+          reject(error)
+        }
+        reader.readAsDataURL(blob)
+      })
+    } catch (error) {
+      throw error
+    }
+  }
+
   private _queryIpfsFn = async (uri: IpfsURI) => {
     const key = uri.substring('ipfs://'.length)
-    const response = await fetch(`https://ipfs.io/ipfs/${key}`)
-    const blob = await response.blob()
-    return new Promise<IpfsResult>((resolve, reject) => {
-      const reader = new FileReader()
-      // eslint-disable-next-line func-names
-      reader.onload = function () {
-        const base64 = this.result as string
-        resolve(base64)
-      }
-      reader.onerror = (error) => {
-        reject(error)
-      }
-      reader.readAsDataURL(blob)
-    })
+    const url = `https://ipfs.io/ipfs/${key}`
+    return this._queryUrlFn(url)
   }
 
   get dobDecodeServerURL() {
@@ -62,6 +72,10 @@ export class Config {
 
   get queryIpfsFn(): QueryIpfsFn {
     return this._queryIpfsFn
+  }
+
+  get queryUrlFn(): QueryUrlFn {
+    return this._queryUrlFn
   }
 }
 

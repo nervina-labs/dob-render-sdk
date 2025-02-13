@@ -27,8 +27,15 @@ async function handleNodeHref(node: INode) {
         typeof result === 'string'
           ? result
           : `data:${result.content_type};base64,${hexToBase64(result.content)}`
+    } else {
+      const result = await config.queryUrlFn(node.attributes.href as string)
+      node.attributes.href =
+        typeof result === 'string'
+          ? result
+          : `data:${result.content_type};base64,${hexToBase64(result.content)}`
     }
   }
+
   return node
 }
 
