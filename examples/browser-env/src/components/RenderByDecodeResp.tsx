@@ -33,7 +33,13 @@ export const RenderByDecodeResp = () => {
       </button>
       {data ? (
         <img src={data} style={{ width: '500px', height: '500px', marginTop: '20px' }} />
-      ) : null}
+      ) : (
+        isLoading ? (
+          <img src={'/loading.svg'} style={{ width: '200px', height: '200px' }} />
+        ) : (
+          null
+        )
+      )}
     </div>
   )
 }

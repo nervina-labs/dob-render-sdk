@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMutation } from 'react-query'
 import { renderByTokenKey, svgToBase64 } from '@nervina-labs/dob-render'
 
@@ -18,6 +18,13 @@ export const RenderByTokenKey = ({isMainnet}: {isMainnet: boolean}) => {
       throw error
     }
   })
+
+  useEffect(() => {
+    if (tokenKey) {
+      mutateAsync()
+    }
+  }, [])
+
   return (
     <div
       style={{
@@ -39,7 +46,13 @@ export const RenderByTokenKey = ({isMainnet}: {isMainnet: boolean}) => {
       </div>
       {data ? (
         <img src={data} style={{ width: '500px', height: '500px' }} />
-      ) : null}
+      ) : (
+        isLoading ? (
+          <img src={'/loading.svg'} style={{ width: '200px', height: '200px' }} />
+        ) : (
+          null
+        )
+      )}
     </div>
   )
 }
