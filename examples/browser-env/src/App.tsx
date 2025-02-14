@@ -11,7 +11,7 @@ const searchParams = new URLSearchParams(location.search)
 const initialIsMainnet = searchParams.get('is_mainnet')?.toLowerCase() === 'true';
 
 const updateConfig = (isMainnet: boolean) => {
-  config.setDobDecodeServerURL(isMainnet ? 'https://dob0-decoder.omiga.io' : 'https://dob0-decoder-dev.omiga.io');
+  config.setDobDecodeServerURL(isMainnet ? 'https://dob-decoder.rgbpp.io' : 'https://dob0-decoder-dev.omiga.io');
 
   config.setQueryBtcFsFn(async (uri) => {
     let url = isMainnet 
