@@ -6,7 +6,7 @@ import { backgroundColorParser } from './background-color-parser'
 
 export async function renderImageSvg(traits: ParsedTrait[]): Promise<string> {
   const prevBg = traits.find((trait) => trait.name === 'prev.bg')
-  const bgColor = backgroundColorParser(traits, { defaultColor: '#fff' })
+  const bgColor = backgroundColorParser(traits, { defaultColor: '#FFFFFF00' })
 
   let bgImage = ''
   if (prevBg?.value && typeof prevBg.value === 'string') {
@@ -32,6 +32,9 @@ export async function renderImageSvg(traits: ParsedTrait[]): Promise<string> {
           background: bgColor ?? '#000',
           color: '#fff',
           height: '500px',
+          justifyContent: 'center',
+          alignItems: 'center',
+          overflow: 'hidden',
         },
         children: [
           bgImage
@@ -40,11 +43,10 @@ export async function renderImageSvg(traits: ParsedTrait[]): Promise<string> {
                 type: 'img',
                 props: {
                   src: bgImage,
-                  width: 500,
-                  height: 500,
                   style: {
-                    width: '100%',
-                    height: '100%',
+                    objectFit: 'contain',
+                    maxWidth: '100%',
+                    maxHeight: '100%',
                   },
                 },
               }
