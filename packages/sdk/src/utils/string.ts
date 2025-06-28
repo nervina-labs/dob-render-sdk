@@ -1,4 +1,4 @@
-import type {BtcFsURI, IpfsURI} from '../config'
+import type {BtcFsURI, FileServerResult, IpfsURI} from '../config'
 
 export function parseStringToArray(str: string): string[] {
   const regex = /'([^']*)'/g

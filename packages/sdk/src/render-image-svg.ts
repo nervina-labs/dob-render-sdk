@@ -1,8 +1,9 @@
 import satori from 'satori'
 import type { ParsedTrait } from './traits-parser'
 import { config } from './config'
-import {hexToBase64, isBtcFs, isIpfs} from './utils/string'
 import { backgroundColorParser } from './background-color-parser'
+import { processFileServerResult } from './utils/mime'
+import { isBtcFs, isIpfs } from './utils/string'
 
 export async function renderImageSvg(traits: ParsedTrait[]): Promise<string> {
   const prevBg = traits.find((trait) => trait.name === 'prev.bg')
@@ -12,10 +13,10 @@ export async function renderImageSvg(traits: ParsedTrait[]): Promise<string> {
   if (prevBg?.value && typeof prevBg.value === 'string') {
     if (isBtcFs(prevBg.value)) {
       const btcFsResult = await config.queryBtcFsFn(prevBg.value)
-      bgImage = typeof btcFsResult === 'string' ? btcFsResult : `data:${btcFsResult.content_type};base64,${hexToBase64(btcFsResult.content)}`
+      bgImage = processFileServerResult(btcFsResult)
     } else if (isIpfs(prevBg.value)) {
       const ipfsFsResult = await config.queryIpfsFn(prevBg.value)
-      bgImage = typeof ipfsFsResult === 'string' ? ipfsFsResult : `data:${ipfsFsResult.content_type};base64,${hexToBase64(ipfsFsResult.content)}`
+      bgImage = processFileServerResult(ipfsFsResult)
     } else if (prevBg.value.startsWith('https://')) {
       bgImage = prevBg.value
     }
